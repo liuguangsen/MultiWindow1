@@ -18,6 +18,7 @@
 package com.multiwindow.liugs.multiwindow1.logger;
 
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -50,7 +51,9 @@ public class LogFragment extends Fragment {
         mLogView = new LogView(getActivity());
         ViewGroup.LayoutParams logParams = new ViewGroup.LayoutParams(scrollParams);
         logParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        mLogView.setTextAppearance(android.R.style.TextAppearance_Material_Medium);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mLogView.setTextAppearance(android.R.style.TextAppearance_Material_Medium);
+        }
         mLogView.setLayoutParams(logParams);
         mLogView.setClickable(true);
         mLogView.setFocusable(true);

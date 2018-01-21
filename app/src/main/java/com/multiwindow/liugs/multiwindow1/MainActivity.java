@@ -37,7 +37,6 @@ import com.multiwindow.liugs.multiwindow1.activities.UnresizableActivity;
 
 public class MainActivity extends LoggingActivity {
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +44,12 @@ public class MainActivity extends LoggingActivity {
 
         View multiDisabledMessage = findViewById(R.id.warning_multiwindow_disabled);
         // Display an additional message if the app is not in multiwindow mode.
-        if (!isInMultiWindowMode()) {
-            multiDisabledMessage.setVisibility(View.VISIBLE);
-        } else {
-            multiDisabledMessage.setVisibility(View.GONE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (!isInMultiWindowMode()) {
+                multiDisabledMessage.setVisibility(View.VISIBLE);
+            } else {
+                multiDisabledMessage.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -96,7 +97,9 @@ public class MainActivity extends LoggingActivity {
 
         // Set the bounds as an activity option.
         ActivityOptions options = ActivityOptions.makeBasic();
-        options.setLaunchBounds(bounds);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            options.setLaunchBounds(bounds);
+        }
 
         // Start the LaunchBoundsActivity with the specified options
         Intent intent = new Intent(this, LaunchBoundsActivity.class);
